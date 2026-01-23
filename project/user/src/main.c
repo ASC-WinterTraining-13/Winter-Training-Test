@@ -35,27 +35,77 @@
 
 #include "zf_common_headfile.h"
 
+#include "zf_device_oled.h"
+#include "zf_driver_timer.h"
+
+
 // 打开新的工程或者工程移动了位置务必执行以下操作
 // 第一步 关闭上面所有打开的文件
 // 第二步 project->clean  等待下方进度条走完
 
 // 本例程是开源库移植用空工程
 
+#define KEY1                    (E2 )
+#define KEY2                    (E3 )
+#define KEY3                    (E4 )
+#define KEY4                    (E5 )
+
+#define SWITCH1                 (D3 )
+#define SWITCH2                 (D4 )
+
 // **************************** 代码区域 ****************************
-int main(void)
+int main(void)       
 {
-    clock_init(SYSTEM_CLOCK_120M);                                              // 初始化芯片时钟 工作频率为 120MHz
+	clock_init(SYSTEM_CLOCK_120M);                                              // 初始化芯片时钟 工作频率为 120MHz
     debug_init();                                                               // 初始化默认 Debug UART
 
-    // 此处编写用户代码 例如外设初始化代码等
-    
-    // 此处编写用户代码 例如外设初始化代码等
+	//OLED初始化
+	oled_init();
+	//另一个可以使用的字体为8X16,但是坐标仍然是基于6X8标定的
+	oled_set_font(OLED_6X8_FONT);	
+	
+	//按键初始化
+	gpio_init(KEY1, GPI, GPIO_HIGH, GPI_PULL_UP);                               // 初始化 KEY1 输入 默认高电平 上拉输入
+	gpio_init(KEY2, GPI, GPIO_HIGH, GPI_PULL_UP);                               // 初始化 KEY2 输入 默认高电平 上拉输入
+	gpio_init(KEY3, GPI, GPIO_HIGH, GPI_PULL_UP);                               // 初始化 KEY3 输入 默认高电平 上拉输入
+	gpio_init(KEY4, GPI, GPIO_HIGH, GPI_PULL_UP);                               // 初始化 KEY4 输入 默认高电平 上拉输入
 
+	//拨码开关初始化
+	gpio_init(SWITCH1, GPI, GPIO_HIGH, GPI_FLOATING_IN);                        // 初始化 SWITCH1 输入 默认高电平 浮空输入
+	gpio_init(SWITCH2, GPI, GPIO_HIGH, GPI_FLOATING_IN);                        // 初始化 SWITCH2 输入 默认高电平 浮空输入
+	
+	
+	uint16_t i = 0, j = 0;
+	
     while(1)
     {
-        // 此处编写需要循环执行的代码
-        
-        // 此处编写需要循环执行的代码
+			
+		//按键按下电平为0
+		i = 0, j = 0;
+		if (gpio_get_level(KEY4))
+		{
+			i = 1;
+		}
+		if (!gpio_get_level(KEY4))
+		{
+			j = 1;
+		}
+			
+			
+		//拨码开关上0，下一		
+//		if(gpio_get_level(SWITCH1))
+//		{
+//			i = 1;
+//		}
+//		if(!gpio_get_level(SWITCH1))
+//		{
+//			j = 1;
+//		}
+			
+			
+		oled_show_uint(0, 0, i, 4);
+		oled_show_uint(0, 1, j, 4);
+				
     }
 }
 // **************************** 代码区域 ****************************
