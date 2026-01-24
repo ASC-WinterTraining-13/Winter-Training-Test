@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\user\inc;..\code;..\..\libraries\zf_common;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\..\libraries\sdk;..\..\libraries\sdk\CMSIS\Include;..\..\libraries\sdk\drivers;..\..\libraries\components\fatfs\source;..\hardware</IncludePath>
+              <IncludePath>..\user\inc;..\code;..\..\libraries\zf_common;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\..\libraries\sdk;..\..\libraries\sdk\CMSIS\Include;..\..\libraries\sdk\drivers;..\..\libraries\components\fatfs\source</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -410,14 +410,14 @@
           <GroupName>code</GroupName>
           <Files>
             <File>
-              <FileName>key.c</FileName>
+              <FileName>Key.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\key.c</FilePath>
+              <FilePath>.\Key.c</FilePath>
             </File>
             <File>
-              <FileName>key.h</FileName>
+              <FileName>Key.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\key.h</FilePath>
+              <FilePath>.\Key.h</FilePath>
             </File>
           </Files>
         </Group>
