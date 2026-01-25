@@ -23,13 +23,13 @@ void Key_Init(void)
 uint8_t Key_GetNum(void)
 {
 	uint8_t Temp;
-//	if(Key_Num)//防止可能由中断造成的标志位直接清零，致使按键事件被忽略
-//	{
+	if(Key_Num)//防止可能由中断造成的标志位直接清零，致使按键事件被忽略
+	{
 		Temp = Key_Num;//利用中间变量实现标志位的返回并清零
 		Key_Num = 0;
 		return Temp;
-//	}
-//	return 0;
+	}
+	return 0;
 }
 
 
@@ -61,7 +61,7 @@ void Key_Tick(void)//利用定时中断调用，获取通用的时间基准
 	//静态变量默认值为0，函数退出后值不会丢失
 	
 	Count++;//计数分频
-	if(Count>=20)
+	if(Count >= 2)
 	{
 		Count=0;
 		
