@@ -40,6 +40,7 @@
 
 #include "zf_device_oled.h"
 #include "zf_device_key.h"
+#include "zf_device_mpu6050.h"
 
 // 打开新的工程或者工程移动了位置务必执行以下操作
 // 第一步 关闭上面所有打开的文件
@@ -59,11 +60,14 @@ int main(void)
     //（七针脚）OLED初始化
     oled_init();
     //可以使用的字体为6X8和8X16,点阵坐标等效是基于6X8标定的
-    oled_set_font(OLED_8X16_FONT);    
+    oled_set_font(OLED_6X8_FONT);    
 	oled_clear();
 	
 	// 按键初始化（10ms扫描周期）
     key_init(10);
+	
+	//mpu6050
+	mpu6050_init();
 	
 	// 初始化10ms定时器用于按键扫描
     pit_ms_init(TIM6_PIT, 10);
@@ -74,27 +78,48 @@ int main(void)
     {
         // 此处编写需要循环执行的代码
 		
+		//获取 MPU6050数据		
+		mpu6050_get_gyro();
+		mpu6050_get_acc();
+		
+		oled_show_string(0, 0, "GX:");
+		oled_show_string(0, 1, "GY:");
+		oled_show_string(0, 2, "GZ:");
+		oled_show_string(0, 3, "AX:");
+		oled_show_string(0, 4, "AY:");
+		oled_show_string(0, 5, "AZ:");
+		
+		oled_show_int(18, 0, mpu6050_gyro_x, 3);
+		oled_show_int(18, 1, mpu6050_gyro_y, 3);
+		oled_show_int(18, 2, mpu6050_gyro_z, 3);
+		oled_show_int(18, 3, mpu6050_acc_x, 3);
+		oled_show_int(18, 4, mpu6050_acc_y, 3);
+		oled_show_int(18, 5, mpu6050_acc_z, 3);
+		
+		
 		
         if (KEY_SHORT_PRESS == key_get_state(KEY_1))
 		{
 			key_clear_state(KEY_1);
 
 		}
-		if (KEY_SHORT_PRESS == key_get_state(KEY_2))
+		else if (KEY_SHORT_PRESS == key_get_state(KEY_2))
 		{
 			key_clear_state(KEY_2);
 
 		}
-		if (KEY_SHORT_PRESS == key_get_state(KEY_3))
+		else if (KEY_SHORT_PRESS == key_get_state(KEY_3))
 		{
 			key_clear_state(KEY_3);
 
 		}
-		if (KEY_SHORT_PRESS == key_get_state(KEY_4))
+		else if (KEY_SHORT_PRESS == key_get_state(KEY_4))
 		{
 			key_clear_state(KEY_4);
 
 		}
+		
+		system_delay_ms(100);
 		
 		
         // 此处编写需要循环执行的代码
