@@ -34,28 +34,20 @@
 ********************************************************************************************************************/
 
 #include "zf_common_headfile.h"
-#include "bluetooth_hc04.h"
 #include <string.h>
 #include <stdlib.h>
 
 #include "zf_device_oled.h"
 #include "zf_device_key.h"
 #include "zf_device_mpu6050.h"
+#include "zf_driver_pit.h"
 
-// 打开新的工程或者工程移动了位置务必执行以下操作
-// 第一步 关闭上面所有打开的文件
-// 第二步 project->clean  等待下方进度条走完
+#include "timer_flag.h"
 
-// 本例程是开源库移植用空工程
-
-// **************************** 代码区域 ****************************
 int main(void)
 {
     clock_init(SYSTEM_CLOCK_120M);                                              // 初始化芯片时钟 工作频率为 120MHz
-    debug_init();                                                               // 初始化默认 Debug UART
-
-    // 此处编写用户代码 例如外设初始化代码等
-	
+    debug_init();                                                               // 初始化默认 Debug UART	
 	
     //（七针脚）OLED初始化
     oled_init();
@@ -71,24 +63,19 @@ int main(void)
 	
 	// 初始化10ms定时器用于按键扫描
     pit_ms_init(TIM6_PIT, 10);
+	pit_ms_init(TIM7_PIT, 5); 
 	
-    // 此处编写用户代码 例如外设初始化代码等
+	
+	oled_show_string(0, 0, "GX:");
+	oled_show_string(0, 1, "GY:");
+	oled_show_string(0, 2, "GZ:");
+	oled_show_string(0, 3, "AX:");
+	oled_show_string(0, 4, "AY:");
+	oled_show_string(0, 5, "AZ:");
 
     while(1)
     {
-        // 此处编写需要循环执行的代码
-		
-		//获取 MPU6050数据		
-		mpu6050_get_gyro();
-		mpu6050_get_acc();
-		
-		oled_show_string(0, 0, "GX:");
-		oled_show_string(0, 1, "GY:");
-		oled_show_string(0, 2, "GZ:");
-		oled_show_string(0, 3, "AX:");
-		oled_show_string(0, 4, "AY:");
-		oled_show_string(0, 5, "AZ:");
-		
+			
 		oled_show_int(18, 0, mpu6050_gyro_x, 3);
 		oled_show_int(18, 1, mpu6050_gyro_y, 3);
 		oled_show_int(18, 2, mpu6050_gyro_z, 3);
@@ -96,7 +83,11 @@ int main(void)
 		oled_show_int(18, 4, mpu6050_acc_y, 3);
 		oled_show_int(18, 5, mpu6050_acc_z, 3);
 		
-		
+		if (mpu6050_analysis_enable)
+		{
+			mpu6050_get_data();
+			mpu6050_analysis_enable = 0;
+		}
 		
         if (KEY_SHORT_PRESS == key_get_state(KEY_1))
 		{
@@ -119,10 +110,7 @@ int main(void)
 
 		}
 		
-		system_delay_ms(100);
-		
-		
-        // 此处编写需要循环执行的代码
+
     }
 }
-// **************************** 代码区域 ****************************
+
