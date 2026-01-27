@@ -1,116 +1,56 @@
 /*********************************************************************************************************************
-* MM32F327X-G8P Opensourec Library 即（MM32F327X-G8P 开源库）是一个基于官方 SDK 接口的第三方开源库
-* Copyright (c) 2022 SEEKFREE 逐飞科技
-* 
-* 本文件是 MM32F327X-G8P 开源库的一部分
-* 
-* MM32F327X-G8P 开源库 是免费软件
-* 您可以根据自由软件基金会发布的 GPL（GNU General Public License，即 GNU通用公共许可证）的条款
-* 即 GPL 的第3版（即 GPL3.0）或（您选择的）任何后来的版本，重新发布和/或修改它
-* 
-* 本开源库的发布是希望它能发挥作用，但并未对其作任何的保证
-* 甚至没有隐含的适销性或适合特定用途的保证
-* 更多细节请参见 GPL
-* 
-* 您应该在收到本开源库的同时收到一份 GPL 的副本
-* 如果没有，请参阅<https://www.gnu.org/licenses/>
-* 
-* 额外注明：
-* 本开源库使用 GPL3.0 开源许可证协议 以上许可申明为译文版本
-* 许可申明英文版在 libraries/doc 文件夹下的 GPL3_permission_statement.txt 文件中
-* 许可证副本在 libraries 文件夹下 即该文件夹下的 LICENSE 文件
-* 欢迎各位使用并传播本程序 但修改内容时必须保留逐飞科技的版权声明（即本声明）
-* 
-* 文件名称          main
-* 公司名称          成都逐飞科技有限公司
-* 版本信息          查看 libraries/doc 文件夹内 version 文件 版本说明
-* 开发环境          IAR 8.32.4 or MDK 5.37
-* 适用平台          MM32F327X_G8P
-* 店铺链接          https://seekfree.taobao.com/
-* 
-* 修改记录
-* 日期              作者                备注
-* 2022-08-10        Teternal            first version
+* MM32F327X-G8P 蓝牙CH-04 收发测试 - 回显模式
 ********************************************************************************************************************/
 
 #include "zf_common_headfile.h"
-#include <string.h>
-#include <stdlib.h>
-
-#include "zf_device_oled.h"
-#include "zf_device_key.h"
-#include "zf_device_mpu6050.h"
-#include "zf_driver_pit.h"
-
-#include "timer_flag.h"
+#include "zf_device_bluetooth_ch04.h"
 
 int main(void)
 {
-    clock_init(SYSTEM_CLOCK_120M);                                              // 初始化芯片时钟 工作频率为 120MHz
-    debug_init();                                                               // 初始化默认 Debug UART	
-	
-    //（七针脚）OLED初始化
-    oled_init();
-    //可以使用的字体为6X8和8X16,点阵坐标等效是基于6X8标定的
-    oled_set_font(OLED_6X8_FONT);    
-	oled_clear();
-	
-	// 按键初始化（10ms扫描周期）
-    key_init(10);
-	
-	//mpu6050
-	mpu6050_init();
-	
-	// 初始化10ms定时器用于按键扫描
-    pit_ms_init(TIM6_PIT, 10);
-	pit_ms_init(TIM7_PIT, 5); 
-	
-	
-	oled_show_string(0, 0, "GX:");
-	oled_show_string(0, 1, "GY:");
-	oled_show_string(0, 2, "GZ:");
-	oled_show_string(0, 3, "AX:");
-	oled_show_string(0, 4, "AY:");
-	oled_show_string(0, 5, "AZ:");
-
+    clock_init(SYSTEM_CLOCK_120M);
+    debug_init();
+    bluetooth_ch04_init();
+    
+    printf("\r\n========== Bluetooth CH-04 Echo Test ==========\r\n");
+    printf("Waiting for data...\r\n");
+    printf("Send any data in format: [data]\r\n\r\n");
+    
     while(1)
     {
-			
-		oled_show_int(18, 0, mpu6050_gyro_x, 3);
-		oled_show_int(18, 1, mpu6050_gyro_y, 3);
-		oled_show_int(18, 2, mpu6050_gyro_z, 3);
-		oled_show_int(18, 3, mpu6050_acc_x, 3);
-		oled_show_int(18, 4, mpu6050_acc_y, 3);
-		oled_show_int(18, 5, mpu6050_acc_z, 3);
-		
-		if (mpu6050_analysis_enable)
-		{
-			mpu6050_get_data();
-			mpu6050_analysis_enable = 0;
-		}
-		
-        if (KEY_SHORT_PRESS == key_get_state(KEY_1))
-		{
-			key_clear_state(KEY_1);
-
-		}
-		else if (KEY_SHORT_PRESS == key_get_state(KEY_2))
-		{
-			key_clear_state(KEY_2);
-
-		}
-		else if (KEY_SHORT_PRESS == key_get_state(KEY_3))
-		{
-			key_clear_state(KEY_3);
-
-		}
-		else if (KEY_SHORT_PRESS == key_get_state(KEY_4))
-		{
-			key_clear_state(KEY_4);
-
-		}
-		
-
+        if(bluetooth_ch04_get_rx_flag())
+        {
+            uint8 rx_buffer[100];
+            uint32 rx_length = bluetooth_ch04_read_buffer(rx_buffer, 100);
+            
+            if(rx_length > 0)
+            {
+                rx_buffer[rx_length] = '\0';
+                
+                // 显示接收到的数据
+                printf("RX: [");
+                for(uint32 i = 0; i < rx_length; i++)
+                {
+                    printf("%c", rx_buffer[i]);
+                }
+                printf("]\r\n");
+                
+                // ★★★ 重点改动：直接返回接收到的数据 ★★★
+                printf("TX: [");
+                for(uint32 i = 0; i < rx_length; i++)
+                {
+                    printf("%c", rx_buffer[i]);
+                }
+                printf("]\r\n");
+                
+                // 发送原数据给蓝牙
+                bluetooth_ch04_send_string("[");
+                bluetooth_ch04_send_buffer(rx_buffer, rx_length);
+                bluetooth_ch04_send_string("]");
+            }
+        }
+        
+        system_delay_ms(100);
     }
+    
+    return 0;
 }
-

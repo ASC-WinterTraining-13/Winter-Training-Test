@@ -410,24 +410,24 @@
           <GroupName>code</GroupName>
           <Files>
             <File>
-              <FileName>bluetooth_hc04.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\code\bluetooth_hc04.h</FilePath>
-            </File>
-            <File>
-              <FileName>bluetooth_hc04.c</FileName>
+              <FileName>zf_device_bluetooth_ch04.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\code\bluetooth_hc04.c</FilePath>
+              <FilePath>..\code\zf_device_bluetooth_ch04.c</FilePath>
             </File>
             <File>
-              <FileName>timer_flag.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\code\timer_flag.c</FilePath>
-            </File>
-            <File>
-              <FileName>timer_flag.h</FileName>
+              <FileName>zf_device_bluetooth_ch04.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\code\timer_flag.h</FilePath>
+              <FilePath>..\code\zf_device_bluetooth_ch04.h</FilePath>
+            </File>
+            <File>
+              <FileName>bluetooth_ch04_example.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\code\bluetooth_ch04_example.c</FilePath>
+            </File>
+            <File>
+              <FileName>bluetooth_ch04_example.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\code\bluetooth_ch04_example.h</FilePath>
             </File>
           </Files>
         </Group>

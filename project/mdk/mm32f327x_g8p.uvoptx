@@ -235,7 +235,7 @@
 
   <Group>
     <GroupName>user_h</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -262,24 +262,24 @@
     <File>
       <GroupNumber>3</GroupNumber>
       <FileNumber>4</FileNumber>
-      <FileType>5</FileType>
+      <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\code\bluetooth_hc04.h</PathWithFileName>
-      <FilenameWithoutPath>bluetooth_hc04.h</FilenameWithoutPath>
+      <PathWithFileName>..\code\zf_device_bluetooth_ch04.c</PathWithFileName>
+      <FilenameWithoutPath>zf_device_bluetooth_ch04.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
       <GroupNumber>3</GroupNumber>
       <FileNumber>5</FileNumber>
-      <FileType>1</FileType>
+      <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\code\bluetooth_hc04.c</PathWithFileName>
-      <FilenameWithoutPath>bluetooth_hc04.c</FilenameWithoutPath>
+      <PathWithFileName>..\code\zf_device_bluetooth_ch04.h</PathWithFileName>
+      <FilenameWithoutPath>zf_device_bluetooth_ch04.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -290,8 +290,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\code\timer_flag.c</PathWithFileName>
-      <FilenameWithoutPath>timer_flag.c</FilenameWithoutPath>
+      <PathWithFileName>..\code\bluetooth_ch04_example.c</PathWithFileName>
+      <FilenameWithoutPath>bluetooth_ch04_example.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -302,8 +302,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\code\timer_flag.h</PathWithFileName>
-      <FilenameWithoutPath>timer_flag.h</FilenameWithoutPath>
+      <PathWithFileName>..\code\bluetooth_ch04_example.h</PathWithFileName>
+      <FilenameWithoutPath>bluetooth_ch04_example.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
