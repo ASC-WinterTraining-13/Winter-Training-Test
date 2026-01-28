@@ -5,6 +5,7 @@
 #include "zf_common_headfile.h"
 
 #include "motor.h"
+#include "Encoder.h"
 
 int main(void)
 {
@@ -27,8 +28,12 @@ int main(void)
 	
 	oled_show_string(0, 0, "PWM_L:");
 	oled_show_string(0, 1, "PWM_R:");
+	oled_show_string(0, 2, "Enco1:");
+	oled_show_string(0, 3, "Enco2:");
+	
 	
 	motor_Init();
+	Encoder_Init();
 	
     while(1)
     {
@@ -58,7 +63,8 @@ int main(void)
         }
 		oled_show_int(36, 0, PWM_L, 6);
 		oled_show_int(36, 1, PWM_R, 6);
-		
+		oled_show_int(36, 2, Encoder1_Count, 6);
+		oled_show_int(36, 3, Encoder2_Count, 6);
 		
     }
     
