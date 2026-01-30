@@ -449,6 +449,16 @@
               <FileType>5</FileType>
               <FilePath>..\code\Encoder.h</FilePath>
             </File>
+            <File>
+              <FileName>Trace_Sensor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\code\Trace_Sensor.c</FilePath>
+            </File>
+            <File>
+              <FileName>Trace_Sensor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\code\Trace_Sensor.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

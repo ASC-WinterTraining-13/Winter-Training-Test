@@ -6,6 +6,7 @@
 
 #include "motor.h"
 #include "Encoder.h"
+#include "Trace_Sensor.h"
 
 int main(void)
 {
@@ -34,38 +35,48 @@ int main(void)
 	
 	motor_Init();
 	Encoder_Init();
+	Trace_Sensor_Init();
+	
+	uint8 Trace_Sensor_Data[4] = {0};
 	
     while(1)
     {
         if (KEY_SHORT_PRESS == key_get_state(KEY_1))
         {
             key_clear_state(KEY_1);
-			PWM_L += 100;
-			motor_SetPWM(1, PWM_L);
+//			PWM_L += 100;
+//			motor_SetPWM(1, PWM_L);
         }
         else if (KEY_SHORT_PRESS == key_get_state(KEY_2))
         {
             key_clear_state(KEY_2);
-			PWM_L -= 100;
-			motor_SetPWM(1, PWM_L);
+//			PWM_L -= 100;
+//			motor_SetPWM(1, PWM_L);
         }
         else if (KEY_SHORT_PRESS == key_get_state(KEY_3))
         {
             key_clear_state(KEY_3);
-			PWM_R += 100;
-			motor_SetPWM(2, PWM_R);
+//			PWM_R += 100;
+//			motor_SetPWM(2, PWM_R);
         }
         else if (KEY_SHORT_PRESS == key_get_state(KEY_4))
         {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
             key_clear_state(KEY_4);
-			PWM_R -= 100;
-			motor_SetPWM(2, PWM_R);
+//			PWM_R -= 100;
+//			motor_SetPWM(2, PWM_R);
         }
-		oled_show_int(36, 0, PWM_L, 6);
-		oled_show_int(36, 1, PWM_R, 6);
-		oled_show_int(36, 2, Encoder1_Count, 6);
-		oled_show_int(36, 3, Encoder2_Count, 6);
+//		oled_show_int(36, 0, PWM_L, 6);
+//		oled_show_int(36, 1, PWM_R, 6);
+//		oled_show_int(36, 2, Encoder1_Count, 6);
+//		oled_show_int(36, 3, Encoder2_Count, 6);
 		
+		// 获取四路循迹模块值
+		Trace_Sensor_Get_All_Status(Trace_Sensor_Data);
+		
+		oled_show_int(0, 0, Trace_Sensor_Data[0], 1);
+		oled_show_int(6, 0, Trace_Sensor_Data[1], 1);
+		oled_show_int(12, 0, Trace_Sensor_Data[2], 1);
+		oled_show_int(18, 0, Trace_Sensor_Data[3], 1);
     }
     
     return 0;
